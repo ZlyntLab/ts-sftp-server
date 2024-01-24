@@ -821,9 +821,6 @@ export default class SFTPServer extends EventEmitter {
 
     let username: string | undefined;
 
-    client.on('close', () => {
-      client.end();
-    });
     // On Error
     client.on('error', (err: Error) => {
       this.#printError(err);
@@ -879,6 +876,10 @@ export default class SFTPServer extends EventEmitter {
       });
     });
 
+    client.on('end', () => {
+      client.end();
+    });
+
     client.on('close', () => {
       console.log('Disconected:', username);
       let req = {
@@ -887,7 +888,8 @@ export default class SFTPServer extends EventEmitter {
           username,
         },
       };
-      this.#executeMidleware(req, {}, _this, 'DISCONNECT');
+      this.#executeMidleware(req, {}, _this, 'DISCONNECT');      
+      client.end();
     });
   }
 
