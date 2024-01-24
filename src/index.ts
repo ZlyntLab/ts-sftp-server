@@ -877,6 +877,14 @@ export default class SFTPServer extends EventEmitter {
     });
 
     client.on('end', () => {
+      console.log('Disconected:', username);
+      let req = {
+        ...remoteInfo,
+        credentials: {
+          username,
+        },
+      };
+      this.#executeMidleware(req, {}, _this, 'DISCONNECT');   
       client.end();
     });
 
