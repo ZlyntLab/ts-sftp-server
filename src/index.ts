@@ -877,7 +877,7 @@ export default class SFTPServer extends EventEmitter {
     });
 
     client.on('end', () => {
-      console.log('Disconected:', username);
+      // console.log('Disconected:', username);
       let req = {
         ...remoteInfo,
         credentials: {
@@ -889,7 +889,7 @@ export default class SFTPServer extends EventEmitter {
     });
 
     client.on('close', () => {
-      console.log('Disconected:', username);
+      // console.log('Disconected:', username);
       let req = {
         ...remoteInfo,
         credentials: {
